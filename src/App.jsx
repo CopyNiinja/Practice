@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import "./App.css";
+import Add from "./Components/Add";
+import Home from "./Components/Home";
+import Layout from "./Components/Layout";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([
+    {
+      name: "Faiyaz",
+      DOB: new Date("1999-02-20"),
+      gender: "male",
+      email: "qwertyfaiyaz@gmail.com",
+      relationship: "family",
+    },
+    {
+      name: "Faiyaz",
+      DOB: new Date(),
+      gender: "M",
+      email: "qwertyfaiyaz@gmail.com",
+      relationship: "family",
+    },
+    {
+      name: "Syeda",
+      DOB: new Date(),
+      gender: "F",
+      email: "killfyz0.o@gmail.com",
+      relationship: "family",
+    },
+    {
+      name: "Goku",
+      DOB: new Date(),
+      gender: "M",
+      email: "goku0.o@gmail.com",
+      relationship: "friend",
+    },
+  ]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home data={data} />} />
+        <Route path="add" element={<Add data={data} change={setData} />} />
+      </Route>
+    )
+  );
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
